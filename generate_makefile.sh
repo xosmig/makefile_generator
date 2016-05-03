@@ -5,6 +5,8 @@
 # Warning: Doesn't allow names with spaces.
 # Use `_` instead.
 
+JOBS="4"
+
 SOURCE="src"
 TEST="test"
 BIN="bin"
@@ -16,7 +18,7 @@ DEFAULT="release"
 STD='c++1z'
 
 BUILD_OUT='g++ $^ -o $@'
-BUILD_O_RELEASE='g++ -O3 -c -Wfatal-errors -std=$(STD) $< -o $@'
+BUILD_O_RELEASE='g++ -O3 -c -Wfatal-errors -D NDEBUG -std=$(STD) $< -o $@'
 BUILD_O_DEBUG='g++ -c -Wall -std=$(STD) -D _GLIBCXX_DEBUG -g -Wextra -Wshadow -Wpedantic -Wfatal-errors $< -o $@'
 
 releasebin="$BIN/release"
@@ -130,6 +132,8 @@ then
     echo -e "# Automatically generated."
     echo -e "# Useful targets: release, debug, test, clean."
     echo -e "# Executable files: \`$debugbin/$EXE/\`, \`$releasebin/$EXE\`, \`$testbin/main\`."
+    echo -e ""
+    echo -e "MAKEFLAGS = -j $JOBS"
     echo -e ""
     echo -e "STD = $STD"
     echo -e ""
